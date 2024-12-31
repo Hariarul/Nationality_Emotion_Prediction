@@ -72,7 +72,7 @@ def resize_media(image, target_width=800):
     return cv2.resize(image, (target_width, new_height))
 
 if upload_option == "Image":
-    uploaded_image = st.sidebar.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
+    uploaded_image = st.sidebar.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"], key="image_uploader")
     if uploaded_image:
         image = Image.open(uploaded_image)
         img = np.array(image)
@@ -112,7 +112,7 @@ if upload_option == "Image":
         st.image(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), caption="Processed Image", use_column_width=True)
 
 elif upload_option == "Video":
-    uploaded_video = st.sidebar.file_uploader("Upload a Video", type=["mp4", "mov", "avi"])
+    uploaded_video = st.sidebar.file_uploader("Upload a Video", type=["mp4", "mov", "avi"], key="video_uploader")
     if uploaded_video:
         tfile = tempfile.NamedTemporaryFile(delete=False) 
         tfile.write(uploaded_video.read())
