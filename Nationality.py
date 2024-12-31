@@ -41,12 +41,12 @@ def process_person(img):
     nationality_pred = nationality_model.predict(img_resized)
     nationality_idx = np.argmax(nationality_pred)
     nationality = nationality_labels[nationality_idx]
-    nationality_conf = round(nationality_pred[0][nationality_idx] * 100, 2)
+    #nationality_conf = round(nationality_pred[0][nationality_idx] * 100, 2)
 
     emotion_pred = emotion_model.predict(img_resized)
     emotion_idx = np.argmax(emotion_pred)
     emotion = emotion_labels[emotion_idx]
-    emotion_conf = round(emotion_pred[0][emotion_idx] * 100, 2)
+    #emotion_conf = round(emotion_pred[0][emotion_idx] * 100, 2)
 
     age = "N/A"
     age_conf = None
@@ -54,9 +54,9 @@ def process_person(img):
         age_pred = age_model.predict(img_resized)
         age_idx = np.argmax(age_pred)
         age = age_labels[age_idx]
-        age_conf = round(age_pred[0][age_idx] * 100, 2)
+        #age_conf = round(age_pred[0][age_idx] * 100, 2)
 
-    return nationality, nationality_conf, age, age_conf, emotion, emotion_conf
+    return nationality
 
 # Streamlit App
 st.set_page_config(page_title="VisionAI: Advanced Image & Video Analysis", layout="wide")
@@ -140,11 +140,11 @@ elif upload_option == "Video":
                         person_img = frame[y1:y2, x1:x2]
                         nationality, nationality_conf, age, age_conf, emotion, emotion_conf = process_person(person_img)
                         display_text = [
-                            f"{nationality} ({nationality_conf}%)",
-                            f"{emotion} ({emotion_conf}%)"
+                            f"{nationality}",
+                            f"{emotion}"
                         ]
                         if age != "N/A":
-                            display_text.append(f"Age: {age} ({age_conf}%)")
+                            display_text.append(f"Age: {age}")
                         
                         # Calculate width and height of the bounding box
                         w = x2 - x1
