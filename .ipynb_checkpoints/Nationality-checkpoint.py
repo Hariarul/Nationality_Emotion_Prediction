@@ -93,11 +93,11 @@ if upload_option == "Image":
                     person_img = img[y1:y2, x1:x2]
                     nationality, nationality_conf, age, age_conf, emotion, emotion_conf = process_person(person_img)
                     display_text = [
-                        f"{nationality} ({nationality_conf}%)",
-                        f"{emotion} ({emotion_conf}%)"
+                        f"{nationality}",
+                        f"{emotion}"
                     ]
                     if age != "N/A":
-                        display_text.append(f"Age: {age} ({age_conf}%)")
+                        display_text.append(f"Age: {age}")
                     
                     # Calculate width and height of the bounding box
                     w = x2 - x1
