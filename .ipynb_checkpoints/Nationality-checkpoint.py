@@ -41,22 +41,18 @@ def process_person(img):
     nationality_pred = nationality_model.predict(img_resized)
     nationality_idx = np.argmax(nationality_pred)
     nationality = nationality_labels[nationality_idx]
-    #nationality_conf = round(nationality_pred[0][nationality_idx] * 100, 2)
 
     emotion_pred = emotion_model.predict(img_resized)
     emotion_idx = np.argmax(emotion_pred)
     emotion = emotion_labels[emotion_idx]
-    #emotion_conf = round(emotion_pred[0][emotion_idx] * 100, 2)
 
     age = "N/A"
-    age_conf = None
     if nationality in ["Indian", "American"]:
         age_pred = age_model.predict(img_resized)
         age_idx = np.argmax(age_pred)
         age = age_labels[age_idx]
-        #age_conf = round(age_pred[0][age_idx] * 100, 2)
 
-    return nationality
+    return nationality, emotion, age
 
 # Streamlit App
 st.set_page_config(page_title="VisionAI: Advanced Image & Video Analysis", layout="wide")
@@ -72,7 +68,7 @@ def resize_media(image, target_width=800):
     return cv2.resize(image, (target_width, new_height))
 
 if upload_option == "Image":
-    uploaded_image = st.sidebar.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"], key="image_uploader")
+    uploaded_image = st.sidebar.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
     if uploaded_image:
         image = Image.open(uploaded_image)
         img = np.array(image)
@@ -91,7 +87,7 @@ if upload_option == "Image":
 
                 if currentClass == "person" and conf > 0.3:
                     person_img = img[y1:y2, x1:x2]
-                    nationality, nationality_conf, age, age_conf, emotion, emotion_conf = process_person(person_img)
+                    nationality, emotion, age = process_person(person_img)
                     display_text = [
                         f"{nationality}",
                         f"{emotion}"
@@ -112,7 +108,7 @@ if upload_option == "Image":
         st.image(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), caption="Processed Image", use_column_width=True)
 
 elif upload_option == "Video":
-    uploaded_video = st.sidebar.file_uploader("Upload a Video", type=["mp4", "mov", "avi"], key="video_uploader")
+    uploaded_video = st.sidebar.file_uploader("Upload a Video", type=["mp4", "mov", "avi"])
     if uploaded_video:
         tfile = tempfile.NamedTemporaryFile(delete=False) 
         tfile.write(uploaded_video.read())
@@ -138,7 +134,7 @@ elif upload_option == "Video":
 
                     if currentClass == "person" and conf > 0.3:
                         person_img = frame[y1:y2, x1:x2]
-                        nationality, nationality_conf, age, age_conf, emotion, emotion_conf = process_person(person_img)
+                        nationality, emotion, age = process_person(person_img)
                         display_text = [
                             f"{nationality}",
                             f"{emotion}"
