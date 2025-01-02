@@ -105,7 +105,7 @@ if upload_option == "Image":
                         y_offset = y1 + i * 30
                         cvzone.putTextRect(img, text, (x1, y_offset), scale=1, thickness=2, offset=10)
 
-        st.image(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), caption="Processed Image", use_column_width=True)
+        st.image(cv2.cvtColor(img, cv2.COLOR_BGR2RGB), caption="Processed Image", use_container_width=True)
 
 elif upload_option == "Video":
     uploaded_video = st.sidebar.file_uploader("Upload a Video", type=["mp4", "mov", "avi"])
@@ -152,6 +152,5 @@ elif upload_option == "Video":
                             y_offset = y1 + i * 30
                             cvzone.putTextRect(frame, text, (x1, y_offset), scale=1, thickness=2, offset=10)
 
-            stframe.image(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB), channels="RGB", use_column_width=True)
-
+            stframe.image(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB), channels="RGB", use_container_width=True)
         cap.release()
