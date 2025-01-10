@@ -111,7 +111,7 @@ Emotion: Angry 😡
 Input Image: A person from any other nationality.
 
 ## Results 📊
-Accuracy: The model achieves an accuracy of 80-85% for nationality and emotion prediction, and 75-80% for age and dress color prediction across various nationalities.
+Accuracy: The model achieves an accuracy of 70% for nationality and emotion prediction, and 75% for age and dress color prediction across various nationalities.
 Real-time Processing: The model can process 5-10 frames per second in real-time video streams.
 
 ### Example Display:
